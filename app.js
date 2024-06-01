@@ -5,7 +5,7 @@ readline = readLineModule.createInterface({
    output: process.stdout
 });
 
-/**
+/** My Name is Antonio
     * Empty position: ' '
     * X position: 'x'
     * Y position: 'y'
