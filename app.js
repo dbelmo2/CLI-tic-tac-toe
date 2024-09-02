@@ -12,13 +12,35 @@ readline = readLineModule.createInterface({
  */
 
 
+
+
+
+
+
 /**
  * Asks the user a question and calls the answerFunction after
  * @param {string} question - The question to ask the user.
  * @param {function} answerFunction - the function that is called when the user answers the question. It has a single argument/parameter which is the answer the user gave.
  */
-const question = (question) => {
-   return new Promise((resolve) => readline.question(question, resolve));
+const question = async (question) => {
+   let isValidMove = false;
+   let answer;
+   while(isValidMove === false) {
+      answer = await new Promise((resolve) => readline.question(question, resolve));
+      const playerMove = answer.replaceAll(" ", "");
+      const knownValidMoves = ['1A', '2A', '3A', '1B', '2B', '3B', '1C', '2C', '3C'];
+      /** 
+       * The includes function takes a value/parameter, and it checks if the array contains that value. If it does contain the value, 
+       * the function returns true, otherwise it returns false.
+       */
+      isValidMove = knownValidMoves.includes(playerMove);
+
+      if (isValidMove === false) {
+         console.log('Invalid move, please try again!');
+      }
+   }
+
+   return answer;
 };
 
 
@@ -26,7 +48,8 @@ const question = (question) => {
 const getBoard = (boardArray) => {
     const board = `
     \n\n\n\n\n\n\n\n\n
-    \n\n\
+    \n\n\n\n\n\n\n\n\n\n\n\n\n\n
+    \n\n\n\n\n\n\n\n
 
       1     2     3
  A  ${boardArray[0]}    | ${boardArray[1]}   | ${boardArray[2]}
@@ -55,69 +78,92 @@ const startGame = async (boardArray, playerOne, playerTwo) => {
     */
 
    /** your code goes here -----------------------------------*/ 
-let boardArray = ['1 A','2 A','3 A','1 B','2 B','3 B','1 C','2 c','3 C']
-
-
 
  // possible move combinations: 1 A, 2 A, 3 A, 1 B, 2 B, 3 B, 1 C, 2 C, 3 C
-let numOfMoves = 0
+   let numOfMoves = 0
+
+   const initialBoard = getBoard(boardArray);
+   console.log(initialBoard);
+
+   
+
+
+   /**
+    * problem 1; The player is stupid, and they might not follow the expected format at all! example: A A, 3 3, flkdasklfjdskl
+    * problem 2: The player is stupid. They can input their move wrong, such as 1      A, or 1A (solved)
+    */
+
+
+
+
+
+
 
    while(numOfMoves < 9) {
-      const move = await question('Player 1, enter your move: ');
-      if ('1 A' === move ) {
+      const playerOneMove = await question('Player 1, enter your move: ');
+      
+
+
+      if ('1A' === playerOneMove) {
          boardArray[0] = playerOne;
       }
-      else if ('2 A' === move) {
+      else if ('2A' === playerOneMove) {
          boardArray[1] = playerOne;
       }
-      else if ('3 A' === move ) {
+      else if ('3A' === playerOneMove) {
          boardArray[2] = playerOne;
       }
-      else if ('1 B' === move) {
+      else if ('1B' === playerOneMove) {
          boardArray[3] = playerOne;
       }
-      else if ('2 B' === move) {
+      else if ('2B' === playerOneMove) {
          boardArray[4] = playerOne;
       }
-      else if ('3 B' === move) {
+      else if ('3B' === playerOneMove) {
          boardArray[5] = playerOne;
       }
-      else if ('1 C' === move) {
+      else if ('1C' === playerOneMove) {
          boardArray[6] = playerOne;
       }
-      else if ('2 C' === move) {
+      else if ('2C' === playerOneMove) {
          boardArray[7] = playerOne;
       }
-      else if ('3 C' === move) {
+      else if ('3C' === playerOneMove) {
          boardArray[8] = playerOne;
-      }   
-      
-      const move2 = await question('Player 2, can you beat that?: ');
-      if ('1 A' === move ) {
+      } else {
+
+      } 
+   
+      console.log(getBoard(boardArray));
+   
+   
+      const playerTwoMove = await question('Player 2, can you beat that?: ');
+
+      if ('1A' === playerTwoMove ) {
          boardArray[0] = playerTwo;
       }
-      else if ('2 A' === move) {
+      else if ('2A' === playerTwoMove) {
          boardArray[1] = playerTwo;
       }
-      else if ('3 A' === move ) {
+      else if ('3A' === playerTwoMove ) {
          boardArray[2] = playerTwo;
       }
-      else if ('1 B' === move) {
+      else if ('1B' === playerTwoMove) {
          boardArray[3] = playerTwo;
       }
-      else if ('2 B' === move) {
+      else if ('2B' === playerTwoMove) {
          boardArray[4] = playerTwo;
       }
-      else if ('3 B' === move) {
+      else if ('3B' === playerTwoMove) {
          boardArray[5] = playerTwo;
       }
-      else if ('1 C' === move) {
+      else if ('1C' === playerTwoMove) {
          boardArray[6] = playerTwo;
       }
-      else if ('2 C' === move) {
+      else if ('2C' === playerTwoMove) {
          boardArray[7] = playerTwo;
       }
-      else if ('3 C' === move) {
+      else if ('3b2C' === playerTwoMove) {
          boardArray[8] = playerTwo;
       }
     
@@ -146,8 +192,6 @@ function randomIntFromInterval(min, max) { // min and max included
 const main = async () => {
 
  
-    
-
 
    const greetingMessage = 'Greetings! Welcome to CLI-tac-tac-toe. This is a CLI game that requires two players.'
    const boardMessage = `As you can see below, the board\'s x-axis is labeled 1-3 corresponding with it\'s 3 columns. 
@@ -168,9 +212,4 @@ const main = async () => {
 }
 
 main();
-
-
-
-
-
 
