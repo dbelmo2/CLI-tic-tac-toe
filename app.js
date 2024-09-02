@@ -55,7 +55,7 @@ const startGame = async (boardArray, playerOne, playerTwo) => {
     */
 
    /** your code goes here -----------------------------------*/ 
-
+let boardArray = ['1 A','2 A','3 A','1 B','2 B','3 B','1 C','2 c','3 C']
 
 
 
@@ -73,10 +73,56 @@ let numOfMoves = 0
       else if ('3 A' === move ) {
          boardArray[2] = playerOne;
       }
-      else if('1 B' === move) {
+      else if ('1 B' === move) {
          boardArray[3] = playerOne;
       }
-
+      else if ('2 B' === move) {
+         boardArray[4] = playerOne;
+      }
+      else if ('3 B' === move) {
+         boardArray[5] = playerOne;
+      }
+      else if ('1 C' === move) {
+         boardArray[6] = playerOne;
+      }
+      else if ('2 C' === move) {
+         boardArray[7] = playerOne;
+      }
+      else if ('3 C' === move) {
+         boardArray[8] = playerOne;
+      }   
+      
+      const move2 = await question('Player 2, can you beat that?: ');
+      if ('1 A' === move ) {
+         boardArray[0] = playerTwo;
+      }
+      else if ('2 A' === move) {
+         boardArray[1] = playerTwo;
+      }
+      else if ('3 A' === move ) {
+         boardArray[2] = playerTwo;
+      }
+      else if ('1 B' === move) {
+         boardArray[3] = playerTwo;
+      }
+      else if ('2 B' === move) {
+         boardArray[4] = playerTwo;
+      }
+      else if ('3 B' === move) {
+         boardArray[5] = playerTwo;
+      }
+      else if ('1 C' === move) {
+         boardArray[6] = playerTwo;
+      }
+      else if ('2 C' === move) {
+         boardArray[7] = playerTwo;
+      }
+      else if ('3 C' === move) {
+         boardArray[8] = playerTwo;
+      }
+    
+      
+      
       numOfMoves = numOfMoves + 1 
       console.log(getBoard(boardArray))
    }
