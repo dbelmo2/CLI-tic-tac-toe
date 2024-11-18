@@ -1,4 +1,16 @@
+/**
+ * KNOWN BUGS:
+ *  1. Players can overwrite another players move. 
+ *  2. No win condition currently
+ *  3. No end of game overall (max number of moves condition for the while loop is not working)
+ */
+
+
 const readLineModule = require('readline');
+
+
+
+
 
 readline = readLineModule.createInterface({
    input: process.stdin,
@@ -27,22 +39,21 @@ const question = async (question) => {
    let answer;
    while(isValidMove === false) {
       answer = await new Promise((resolve) => readline.question(question, resolve));
-      const playerMove = answer.replaceAll(" ", "");
+      answer = answer.replaceAll(" ", "").toUpperCase();
       const knownValidMoves = ['1A', '2A', '3A', '1B', '2B', '3B', '1C', '2C', '3C'];
       /** 
        * The includes function takes a value/parameter, and it checks if the array contains that value. If it does contain the value, 
        * the function returns true, otherwise it returns false.
        */
-      isValidMove = knownValidMoves.includes(playerMove);
+      isValidMove = knownValidMoves.includes(answer);
 
       if (isValidMove === false) {
          console.log('Invalid move, please try again!');
       }
    }
-
    return answer;
+   
 };
-
 
 
 const getBoard = (boardArray) => {
@@ -85,24 +96,13 @@ const startGame = async (boardArray, playerOne, playerTwo) => {
    const initialBoard = getBoard(boardArray);
    console.log(initialBoard);
 
-   
-
-
-   /**
-    * problem 1; The player is stupid, and they might not follow the expected format at all! example: A A, 3 3, flkdasklfjdskl
-    * problem 2: The player is stupid. They can input their move wrong, such as 1      A, or 1A (solved)
-    */
-
-
-
 
 
 
 
    while(numOfMoves < 9) {
       const playerOneMove = await question('Player 1, enter your move: ');
-      
-
+      console.log('playerOneMove is ', playerOneMove);
 
       if ('1A' === playerOneMove) {
          boardArray[0] = playerOne;
